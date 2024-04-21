@@ -1,0 +1,51 @@
+﻿@page "/remote-dotnet-jobs"
+@model RemoteDotnetJobs
+@{
+	ViewData["Title"] = "Find remote .NET developer jobs.";
+}
+<section class="bg-base-200">
+	<article class="max-w-5xl mx-auto px-4 pb-12">
+		<div class="w-full flex flex-col py-8 text-left">
+			<div class="w-full max-w-6xl mx-auto px-4 prose text-base-content">
+				<h1 class="">
+					Remote .NET Developer Jobs
+				</h1>
+				<p class="text-base-content/80">
+					Working remotely as a .NET developer offers many benefits. It allows for a better work-life balance, eliminating commutes and providing the flexibility to design your work schedule around your life, not the other way around. The freedom to work from anywhere empowers you to choose your ideal work environment, be it a quiet home office or a beachside café, fostering creativity and productivity.
+				</p>
+				<p class="text-base-content/80">
+					The rise of remote work has broadened the horizon for .NET developers, making it easier than ever to connect with leading companies and exciting projects worldwide. Whether you're seeking to join startups on the cutting edge of technology or established corporations undergoing digital transformations, the opportunities are vast.
+				</p>
+				<p class="text-base-content/80">
+					Explore our listings to find your next opportunity and join the growing community of .NET developers who are leveraging remote work to build rewarding careers.
+				</p>
+			</div>
+		</div>
+	</article>
+</section>
+<section class="bg-white py-12">
+	<article class="max-w-5xl mx-auto px-4">
+		<div class="mt-6">
+			<div class="w-full flex flex-col space-y-8" id="jobs">
+				@foreach (var job in Model.Jobs)
+				{
+					<partial name="_JobPreview" model="job" />
+				}
+				<div class="w-full inline-flex items-center mt-8">
+					@if (Model.NextPage > 2)
+					{
+						<a href="/?page=@(Model.NextPage - 2)" class="bg-white text-center border shadow w-32 mx-auto px-2 py-2 hover:bg-gray-50 transition">
+							← Previous
+						</a>
+					}
+					@if (Model.HasNext)
+					{
+						<a href="/?page=@Model.NextPage" class="bg-white text-center border shadow w-32 mx-auto px-2 py-2 hover:bg-gray-50 transition">
+							Next →
+						</a>
+					}
+				</div>
+			</div>
+		</div>
+	</article>
+</section>

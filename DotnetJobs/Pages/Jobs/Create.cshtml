@@ -1,0 +1,101 @@
+﻿@page "/post-job"
+@model Create
+@{
+	ViewData["Title"] = "Hire .NET and C# developers on the #1 .NET job board.";
+}
+
+<div class="min-h-screen mx-auto">
+	<div class="bg-[url('/images/developers.jpg')] bg-cover bg-center bg-no-repeat">
+		<div class="flex flex-col">
+			<div class="bg-neutral text-white">
+				<h1 class="font-bold mr-4 text-center py-2">
+					There are currently 1200+ .NET developers subscribed to Dotnet Jobs weekly jobs newsletter who will see your job posting.
+				</h1>
+			</div>
+		</div>
+	</div>
+	<div class="flex flex-col mt-4 mb-10 px-4 mx-auto max-w-7xl">
+		<section id="mt-6 flex flex-col md:flex-row w-full">
+			<div class="mt-6 flex flex-col md:flex-row w-full">
+				<div class="bg-base-100 card w-full md:w-3/4 md:mr-4">
+					<div class="flex flex-col px-4 py-4 sm:px-6 w-full">
+						<h2 class="text-xl font-bold leading-7 text-primary mb-6">Tell us about your company</h2>
+						<hydro name="CreateJobForm" />
+					</div>
+				</div>
+				<div class="w-full md:w-1/4 mt-8 sm:mt-0 py-4">
+					<div class="bg-base-100 card shadow-xl border">
+						<div class="card-body flex flex-col items-center space-y-6 text-base-content text-left ">
+							<div>
+								<h2 class="text-lg w-full">
+									.NET Jobs helps companies hire amazing .NET and C# developers across the world.
+								</h2>
+							</div>
+							<div class="w-full">
+								<p class="text-left text-lg font-bold">
+									What you'll get
+								</p>
+								<div class="space-y-8 text-left mt-6 text-base">
+									<div class="relative flex items-start">
+										<p class="">📧 Email blast your listing to our community of 1150+ software engineers</p>
+									</div>
+									<div class="relative flex items-start">
+										<p class="">🌐 Your job post gets it's own dedicated page on our website</p>
+									</div>
+									<div class="relative flex items-start">
+										<p class="">📌 Your job post is stickied to the top of the homepage for one month</p>
+									</div>
+									<div class="relative flex items-start">
+										<p class="">🟡 Your job post is highlighted in color to maximize exposure</p>
+									</div>
+									<div class="relative flex items-start">
+										<p class="">🎨 We add your company logo to the job post to maximize exposure</p>
+									</div>
+								</div>
+							</div>
+							<div class="w-full">
+								<p class="text-lg text-gray-600 leading-loose">
+									Need help posting your job? <a class="text-cyan-500 font-bold" href="mailto: wes@dotnetdevs.co">Email us</a> and send a message. We will help you post a job and can also help with discounts if applicable.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<script>
+		// var simplemde = new SimpleMDE({ element: document.getElementById("Description"), hideIcons: ["image"] });
+		// Upload function internally uses the ImageKit.io javascript SDK
+		function upload(event) {
+			if (event.target.files.length > 0) {
+				var logo = event.target.files[0];
+				let formData = new FormData();
+				formData.append("logo", logo);
+				fetch('/api/images/upload', {
+					method: "POST",
+					body: formData
+				})
+				.then(response => response.json())
+				.then(function (data) {
+					if (data.status === "success") {
+						// var preview = document.getElementById("logo-preview");
+						// preview.src = data.url;
+						document.getElementById("CompanyLogo").value = data.url;
+						var event = new Event('change');
+						document.getElementById("CompanyLogo").dispatchEvent(event);
+						// setTimeout(function () {
+						// }, 1000)
+						// alert('The file has been uploaded successfully.');
+					}
+					if (data.status === "error") {
+						alert(data.message);
+						document.getElementById("LogoFile").value = "";
+					}
+				}).catch(function (err) {
+					alert('Oops! Something went wrong.');
+				});
+			}
+		}
+	</script>
+</div>

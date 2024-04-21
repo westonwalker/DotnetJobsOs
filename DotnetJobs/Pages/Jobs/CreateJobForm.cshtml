@@ -1,0 +1,246 @@
+﻿@model CreateJobForm
+
+<div>
+	<form hydro-on:submit="@(() => Model.Add())" class="grid grid-cols-1 gap-y-8 gap-x-6">
+		@* @if (HasError("Other")) *@
+		@* { *@
+		@* 	<div class="text-red-500 text-sm flex justify-start"> *@
+		@* 		@Message *@
+		@* 	</div> *@
+		@* } *@
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Company Name *</span>
+			</div>
+			<input asp-for="CompanyName" required hydro-bind placeholder="Microsoft" class="input input-bordered w-full" />
+			<div class="label">
+				<span class="label-text-alt">Enter your company or organization’s name.</span>
+			</div>
+			<span asp-validation-for="CompanyName"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Company HQ *</span>
+			</div>
+			<input asp-for="CompanyLocation" required hydro-bind placeholder="Seattle, WA" class="input input-bordered w-full" />
+			<div class="label">
+				<span class="label-text-alt">Where your company is located</span>
+			</div>
+			<span asp-validation-for="CompanyLocation"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Email *</span>
+			</div>
+			<input asp-for="CompanyEmail" required hydro-bind placeholder="example@microsoft.com" class="input input-bordered w-full" />
+			<div class="label">
+				<span class="label-text-alt">Email to send your receipt</span>
+			</div>
+			<span asp-validation-for="CompanyEmail"></span>
+		</label>
+	@* 	<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Company Bio (Optional)</span>
+			</div>
+			<input asp-for="CompanyDescription" hydro-bind placeholder="A quick description of your company" class="input input-bordered w-full" />
+			<span asp-validation-for="CompanyDescription"></span>
+		</label> *@
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Company Website *</span>
+			</div>
+			<input asp-for="CompanyWebsite" required hydro-bind placeholder="microsoft.com" class="input input-bordered w-full" />
+			<span asp-validation-for="CompanyWebsite"></span>
+		</label>
+		<div class="mt-2 flex flex-col md:flex-row md:items-center items-start">
+			<div class="mr-4 mb-2 md:mb-0">
+				@if (String.IsNullOrEmpty(Model.CompanyLogo))
+				{
+					<img class="h-28 w-28" src="~/images/company-logo.png" id="logo-preview" alt="company-logo" />
+				}
+				else
+				{
+					<img class="h-28 w-28" src="@Model.CompanyLogo" id="logo-preview" alt="company-logo" />
+				}
+			</div>
+			<div class="flex-1">
+				<label class="form-control w-full">
+					<div class="label">
+						<span class="label-text font-medium">Company Logo (Optional)</span>
+					</div>
+					<input type="file" id="LogoFile" class="file-input file-input-bordered w-full max-w-xs" onchange="upload(event);" />
+					<div class="label">
+						<span class="label-text-alt">Add your company logo. A square png or jpg image works best (250x250). Images must be under 1MB and square. (If your not sure, use your companies Linkedin image)</span>
+					</div>
+					<span asp-validation-for="CompanyLogo"></span>
+					<input type="text" class="hidden" asp-for="CompanyLogo" hydro-bind />
+				</label>
+			</div>
+		</div>
+		<h2 class="text-xl font-bold leading-7 text-primary mt-6">Tell us about the job</h2>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Job Title *</span>
+			</div>
+			<input asp-for="Title" required hydro-bind placeholder="Software Engineer" class="input input-bordered w-full" />
+			<div class="label">
+				<span class="label-text-alt">Example: "Senior .NET Developer"</span>
+			</div>
+			<span asp-validation-for="Title"></span>
+		</label>
+	@* 	<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Job Description *</span>
+			</div>
+			<textarea asp-for="Description" required hydro-bind class="textarea textarea-bordered"></textarea>
+			<div class="label">
+				<span class="label-text-alt">Example: "Senior .NET Developer"</span>
+			</div>
+			<span asp-validation-for="Description"></span>
+		</label> *@
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Link to Apply *</span>
+			</div>
+			<input asp-for="ApplyLink" required hydro-bind placeholder="microsoft.com/job-posting" class="input input-bordered w-full" />
+			<div class="label">
+				<span class="label-text-alt">Link to website or email address</span>
+			</div>
+			<span asp-validation-for="ApplyLink"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Remote Policy *</span>
+			</div>
+			<select asp-for="RemotePolicyId" required hydro-bind class="select select-bordered w-full">
+				<option selected value="">Select...</option>
+				@foreach (var remotePolicy in Model.RemotePolicies)
+				{
+					<option value="@remotePolicy.Id">@remotePolicy.Name</option>
+				}
+			</select>
+			<span asp-validation-for="RemotePolicyId"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Job Location (Optional)</span>
+			</div>
+			<input asp-for="JobLocation" hydro-bind placeholder="Seattle, WA" class="input input-bordered w-full" />
+			<div class="label">
+				<span class="label-text-alt">The location of the office the applicant will be working at. Only applicable for hybrid and in-office jobs.</span>
+			</div>
+			<span asp-validation-for="JobLocation"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Experience Level *</span>
+			</div>
+			<select asp-for="ExperienceLevelId" required hydro-bind class="select select-bordered w-full">
+				<option selected value="">Select...</option>
+				@foreach (var experienceLevel in Model.ExperienceLevels)
+				{
+					<option value="@experienceLevel.Id">@experienceLevel.Name</option>
+				}
+			</select>
+			<span asp-validation-for="ExperienceLevelId"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Employment Type *</span>
+			</div>
+			<select asp-for="WorkTypeId" required hydro-bind class="select select-bordered w-full">
+				<option selected value="">Select...</option>
+				@foreach (var workType in Model.WorkTypes)
+				{
+					<option value="@workType.Id">@workType.Name</option>
+				}
+			</select>
+			<span asp-validation-for="WorkTypeId"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Salary Range (Optional)</span>
+			</div>
+			<div class="block">
+				<select asp-for="SalaryStart" hydro-bind class="select select-bordered w-full">
+					<option selected value="0">Select...</option>
+					@foreach (var salary in Model.SalaryOptions)
+					{
+						<option value="@salary.Key">@salary.Value</option>
+					}
+				</select>
+				<span> - </span>
+				<select asp-for="SalaryEnd" hydro-bind class="select select-bordered w-full">
+					<option selected value="0">Select...</option>
+					@foreach (var salary in Model.SalaryOptions)
+					{
+						<option value="@salary.Key">@salary.Value</option>
+					}
+				</select>
+			</div>
+			<span asp-validation-for="SalaryStart"></span>
+		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text font-medium">Job Location (Optional)</span>
+			</div>
+			<input asp-for="JobLocationRestrictions" hydro-bind placeholder="USA, Canada" class="input input-bordered w-full" />
+			<div class="label">
+				<span class="label-text-alt">If the job requires the applicant to live or have citizenship in certain locations, such as the USA, list them here. Seperate multiple locations with a comma.</span>
+			</div>
+			<span asp-validation-for="JobLocationRestrictions"></span>
+		</label>
+		@* <div class="">
+			<label class="mb-3 block text-base font-medium text-gray-700">
+				Location Restrictions (Optional)
+			</label>
+			<p class="text-xs text-gray-400 font-bold mb-1">If you'd only like to hire citizens or people with a work permit from a specific location, select them here.</p>
+			<div class="w-full grid grid-cols-2 gap-6 mt-4">
+				@foreach (var location in Model.LocationRestrictions)
+				{
+					<div class="relative flex items-start">
+						<div class="flex h-6 items-center">
+							@if (location.Default)
+							{
+								<input checked type="checkbox" hydro-bind id="@location.Value" value="@location.Value" name="JobLocationRestrictions" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+							}
+							else
+							{
+								<input type="checkbox" hydro-bind id="@location.Value" value="@location.Value" name="JobLocationRestrictions" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+							}
+						</div>
+						<div class="ml-3 text-sm leading-6">
+							<label for="@location.Value" class="font-medium text-gray-900">@location.Icon @location.Name</label>
+						</div>
+					</div>
+				}
+			</div>
+			<span asp-validation-for="JobLocationRestrictions"></span>
+		</div> *@
+		<p class="mb-1 mt-6 block text-base font-bold text-black uppercase">
+			Summary (what you'll get)
+		</p>
+		<div class="relative flex items-start text-sm">
+			<p class="font-medium text-black text-lg">📧 Email blast your listing to our community of 1100+ software engineers</p>
+		</div>
+		<div class="relative flex items-start text-sm">
+			<p class="font-medium text-black text-lg">🌐 Your listing is added to our website</p>
+		</div>
+		<div class="relative flex items-start text-sm">
+			<p class="font-medium text-black text-lg">📌 Stickied to the top of the homepage for one month to maximize exposure</p>
+		</div>
+		<div class="relative flex items-start text-sm">
+			<p class="font-medium text-black text-lg">🟡 Your listing is highlighted in color to maximize exposure</p>
+		</div>
+		<div class="relative flex items-start text-sm">
+			<p class="font-medium text-black text-lg">🎨 We add your company logo to maximize exposure</p>
+		</div>
+		<div class="col-span-full">
+			<button type="submit" class="btn btn-primary w-full text-lg text-white">
+				<span>
+					Start hiring for $199 <span aria-hidden="true">→</span>
+				</span>
+			</button>
+		</div>
+	</form>
+</div>

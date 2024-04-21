@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.blog {
+    position: relative;
+}
+
+.blog h1 {
+    margin-bottom: 80px;
+    font-weight: 500;
+    margin-top: 8px;
+    color: hsl(225deg, 15%, 15%);
+    font-size: calc(2.375rem);
+}
+
+.blog h2 {
+    margin-bottom: 25px;
+    font-weight: 500;
+    margin-top: 8px;
+    color: hsl(225deg, 15%, 15%);
+    font-size: calc(2.0rem);
+}
+
+.blog h3 {
+    font-weight: 600;
+    color: hsl(225deg, 15%, 15%);
+    font-size: calc(1.2rem);
+}
+
+.blog p {
+    line-height: calc(1em + 0.725rem);
+    /*font-size: calc(1.1875rem);
+    margin-bottom: 1.5rem;
+    line-height: calc(1em + 0.725rem);
+    font-weight: 400;
+    color: rgb(55 65 81);*/
+}
+
+.job ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-top: 1.33333em !important;
+    margin-bottom: 1.33333em !important;
+    padding-left: 1.5555556em;
+}
+
+.job li {
+    padding-left: 0.4444444em;
+    line-height: calc(1em + 0.725rem);
+}
+
+.job p {
+    margin-top: 1.33333em !important;
+    margin-bottom: 1.33333em !important;
+}
+
+.job h3 {
+    margin-top: 1.33333em !important;
+    margin-bottom: 1.33333em !important;
+}
+
+.breadcrumbs {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.breadcrumbs .chevron {
+    color: hsl(225deg, 8%, 70%);
+    pointer-events: none;
+    margin: 0px 8px;
+}
+
+.breadcrumbs .breadcrumb-links {
+    font-size: 1rem;
+    color: hsl(225deg, 12%, 40%);
+    line-height: calc(1em + 0.725rem);
+}
+
+.job p > code {
+    position: relative;
+    display: inline;
+    font-size: 0.9em;
+    letter-spacing: -0.5px;
+    padding: 4.5px 6px;
+    margin: 1px -1px;
+    background: rgb(209 213 219);
+    border-radius: 3px;
+}
+
+.job pre {
+    background: #1E1E1E;
+    color: #eee;
+    padding: 0.5em !important;
+    white-space: pre;
+    word-break: normal;
+    word-wrap: normal;
+    margin-bottom: 80px !important;
+    margin-top: 48px !important;
+    overflow: auto;
+    position: relative;
+}
+
+.job pre > code {
+    white-space: pre;
+}

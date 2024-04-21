@@ -1,0 +1,26 @@
+﻿@model CreateSubscriber
+
+@if (!Model.IsSubscribed)
+{
+	<form hydro-on:submit="@(() => Model.Subscribe())" class="flex flex-col sm:flex-row justify-center items-center sm:space-x-4 space-y-4 md:space-y-0">
+		<div>
+			<p class="font-bold text-center sm:text-left">Get new .NET Developer jobs sent to you every week</p>
+		</div>
+		<div class="mt-2 flex flex-col sm:flex-row sm:items-start sm:justify-center w-full sm:w-auto">
+			<div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 justify-center items-center">
+				<input asp-for="Email" hydro-bind class="input input-bordered w-full sm:w-auto" placeholder="Type your email..." />
+				<span asp-validation-for="Email"></span>
+			</div>
+			<button type="submit" class="btn btn-neutral">
+				Subscribe
+			</button>
+		</div>
+	</form>
+}
+else
+{
+	<div role="alert" class="alert alert-info">
+		<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+		<span>You are now subscribed to Dotnet Jobs alerts!</span>
+	</div>
+}

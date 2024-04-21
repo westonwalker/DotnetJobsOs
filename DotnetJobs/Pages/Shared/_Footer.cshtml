@@ -1,0 +1,48 @@
+﻿@* <footer class="bg-base-200 py-12">
+	<div class="max-w-5xl mx-auto py-8 flex flex-col px-4">
+		<div class="flex flex-col space-y-6 w-full">
+			<div class="block space-x-4 mx-auto text-center">
+				<a href="/" class="link link-hover">Jobs</a>
+				<a href="https://dotnetengine.com/" class="link link-hover">Hosting</a>
+				<a href="https://twitter.com/wes_walke" class="link link-hover">Twitter</a>
+			</div>
+			<div class="space-y-0.5 mx-auto text-center text-gray-400 text-sm">
+				<p>Built by Spark Technologies</p>
+				<p>@@2023 - @@2024</p>
+			</div>
+		</div>
+	</div>
+</footer> *@
+<footer class="py-20 bg-base-200">
+    <div class="container mx-auto px-6 sm:px-8">
+        <nav class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-6 md:gap-x-8 gap-y-12 text-sm text-base-content/70">
+            <div class="flex flex-col mb-2 space-y-4">
+                <a href="/">
+                    <partial name="_ApplicationLogo" />
+                </a>
+                <p class="text-base">Hire software engineers on the leading job board dedicated to .NET and C# developers.</p>
+                <p>Built by Spark Technologies @@2023 - @@2024</p>
+            </div>
+            <div class="flex flex-col mb-2 space-y-4">
+                <h6 class="text-base-content text-xs uppercase tracking-wide">Links</h6>
+                <a href="/">Home</a>
+                <a href="/remote-dotnet-jobs">Remote</a>
+           @*      <a href="/dotnet-jobs-near-me">Near me</a>
+                <a href="/companies">Companies</a> *@
+                <a href="https://dotnetengine.com" target="_blank">.NET Hosting</a>
+            </div>
+           @*  <div class="flex flex-col mb-2 space-y-4">
+                <h6 class="text-base-content text-xs uppercase tracking-wide">Hire</h6>
+                <a href="/hire-dotnet-developers">Hire .NET Developers</a>
+                <a href="/hire-csharp-developers">Hire C# Developers</a>
+            </div> *@
+            <div class="flex flex-col mb-2 space-y-4">
+                <h6 class="text-base-content text-xs uppercase tracking-wide">Jobs</h6>
+                <a href="/remote-dotnet-jobs">Remote .NET jobs</a>
+            </div>
+           @*  <div class="flex flex-col mb-2 space-y-4">
+                <h6 class="text-base-content text-xs uppercase tracking-wide">Near me</h6>
+            </div> *@
+        </nav>
+    </div>
+</footer>

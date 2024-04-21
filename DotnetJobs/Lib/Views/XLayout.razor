@@ -1,0 +1,17 @@
+﻿@inject IServiceProvider ServiceProvider
+
+<LayoutView Layout="Layout">
+    @ChildContent
+</LayoutView>
+
+@code {
+    [Parameter, EditorRequired]
+    public Type Layout { get; set; }
+
+    [Parameter] public required RenderFragment ChildContent { get; set; }
+    [CascadingParameter] HttpContext HttpContext { get; set; }
+
+    protected override void OnParametersSet()
+    {
+    }
+}

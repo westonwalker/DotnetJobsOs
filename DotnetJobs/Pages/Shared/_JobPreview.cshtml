@@ -1,0 +1,81 @@
+﻿@using DotnetJobs.Application.Helpers
+@model Job
+@{
+
+	var jobLink = Model.ApplyLink.Contains("mailto:") ? Model.ApplyLink : $"/api/jobs/apply/{Model.Id}";
+	var target = "_blank";
+	if (!String.IsNullOrEmpty(Model.Description)) {
+		jobLink = $"/jobs/{Model.Slug}";
+		target = "_self";
+	}
+	string salaryStart = "";
+	string salaryEnd = "";
+	if (Model.SalaryEnd != null && Model.SalaryStart != null)
+	{
+		decimal tempStart = (decimal)Model.SalaryStart;
+		decimal tempEnd = (decimal)Model.SalaryEnd;
+		salaryStart = "$" + tempStart.ToString();
+		salaryEnd = "$" + tempEnd.ToString();
+	}
+}
+
+<a href="@jobLink" target="@target" class="@(Model.IsPremium ? "bg-yellow-200 border-2 border-yellow-400 hover:border-yellow-500 transition" : "bg-white border hover:border-gray-800 transition") card bg-base-100 shadow-xl">
+	<div class="card-body p-4">
+		<div class="flex items-center">
+			<div class="overflow-hidden w-12 h-12 md:w-12 md:h-12 shrink-0">
+				<img src="@Model.Company.Logo" alt="Logo @Model.Company.Name" class="object-contain w-full h-full" loading="lazy">
+			</div>
+			<div class="ml-3">
+				<div>
+					<h4 class="flex items-center text-sm font-medium text-gray-700">
+						@Model.Company.Name
+					</h4>
+				</div>
+				<h3 class="font-display text-lg leading-tight font-bold mt-1">
+					@Model.Title
+				</h3>
+			</div>
+		</div>
+		<div class="text-xs mt-1 flex gap-x-4 gap-y-1 flex-wrap items-center md:gap-2">
+			@if (Model.RemotePolicy.Name == "Remote")
+			{
+				<div class="badge badge-primary badge-outline bg-blue-50">
+					@Model.RemotePolicy.Name
+				</div>
+			}
+			else
+			{
+				<div class="badge badge-ghost">
+					@Model.RemotePolicy.Name
+				</div>
+			}
+			<div class="badge badge-ghost">
+				@Model.WorkType.Name
+			</div>
+			<div class="badge badge-ghost">
+				@Model.ExperienceLevel.Name
+			</div>
+			@if (!String.IsNullOrEmpty(Model.LocationRestrictions))
+			{
+				<div class="badge badge-accent badge-outline bg-violet-50 h-full">
+					@Model.LocationRestrictions
+				</div>
+			}
+			else
+			{
+				<div class="badge badge-ghost">
+					🌎 Worldwide
+				</div>
+			}
+			@if (!String.IsNullOrEmpty(salaryStart) && !String.IsNullOrEmpty(salaryEnd))
+			{
+				<div class="badge badge-outline border-green-500 text-green-500 bg-green-50">
+					@salaryStart - @salaryEnd
+				</div>
+			}
+		</div>
+		<div class="ml-auto absolute hidden md:block top-1/2 transform -translate-y-1/2 right-8 text-base-content text-sm font-normal">
+			View details
+		</div>
+	</div>
+</a>

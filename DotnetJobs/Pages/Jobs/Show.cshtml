@@ -1,0 +1,130 @@
+﻿@page "/jobs/{slug}"
+@using DotnetJobs.Application.Helpers
+@using Markdig
+@model Show
+@{
+	ViewData["Title"] = $"{Model.Job.Company.Name} is hiring a {Model.Job.Title}";
+}
+
+<div class="mt-12 bg-white ">
+	<div class="mx-auto max-w-7xl px-4 sm:px-8">
+		<div>
+			<div class="flex flex-col items-start lg:flex-row lg:items-center lg:space-x-6">
+				<div class="">
+					<img src="@Model.Job.Company.Logo" alt="@Model.Job.Company.Name Logo" class="w-24 h-24" loading="lazy">
+				</div>
+				<div class="mt-4 lg:mt-0">
+					<h1 class="text-base-content text-4xl leading-tight md:text-5xl md:leading-tight font-bold">
+						@Model.Job.Title
+					</h1>
+					<div class="flex flex-row space-x-4 items-center mt-2">
+						<a href="https://@Model.Job.Company.Website" target="_blank" class="font-medium text-base-content hover:underline">
+							@Model.Job.Company.Name
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="grid lg:grid-cols-7 gap-12 pt-4">
+				<div class="lg:order-1 order-2 lg:col-span-5 lg:mt-0 pb-12 blog job">
+					@Html.Raw(Markdown.ToHtml(Model.Job.Description))
+				</div>
+				<div class="space-y-5 lg:order-1 lg:col-span-2">
+					<div class="card shadow-xl bg-base-100 border">
+						<div class="card-body">
+							<div class="flex flex-wrap flex-row items-start space-y-3">
+								<div class="w-full">
+									<h5 class="font-medium text-black mb-1">Remote policy</h5>
+									<div class="badge badge-ghost">@Model.Job.RemotePolicy.Name</div>
+								</div>
+								@if (!String.IsNullOrEmpty(Model.Job.Location))
+								{
+									<div class="w-full">
+										<h5 class="font-medium text-black mb-1">Office Location</h5>
+										<div class="badge badge-ghost">@Model.Job.Location</div>
+									</div>
+								}
+								<div class="w-full">
+									<h5 class="font-medium text-black mb-1">Experience level</h5>
+									<div class="badge badge-ghost">@Model.Job.ExperienceLevel.Name</div>
+								</div>
+								<div class="w-full">
+									<h5 class="font-medium text-black mb-1">Work type</h5>
+									<div class="badge badge-ghost">@Model.Job.WorkType.Name</div>
+								</div>
+								<div class="w-full">
+									<h5 class="font-medium text-black mb-1">Experience level</h5>
+									<div class="badge badge-ghost">@Model.Job.ExperienceLevel.Name</div>
+								</div>
+								<div class="w-full">
+									<h5 class="font-medium text-black mb-1">Salary</h5>
+									<div class="badge badge-ghost">
+										@if (Model.Job.SalaryStart != null && Model.Job.SalaryEnd != null)
+										{
+											<span>USD @Model.Job.SalaryStart-@Model.Job.SalaryEnd/yr</span>
+										}
+										else
+										{
+											<span>N/A</span>
+										}
+									</div>
+								</div>
+								<div class="w-full">
+									<h5 class="font-medium text-black mb-1">Date posted</h5>
+									<div class="badge badge-ghost">@Model.Job.CreatedAt.ToString("MM/dd/yyyy")</div>
+								</div>
+								@if (!String.IsNullOrEmpty(Model.Job.LocationRestrictions))
+								{
+									<div class="w-full">
+										<h5 class="font-medium text-black mb-1">Location Restrictions</h5>
+										<div class="flex flex-col">
+											@foreach (var str in Model.Job.LocationRestrictions.Split(';'))
+											{
+												var location = LocationRestrictions.Find(str);
+
+												@if (location != null)
+												{
+													<div class="badge badge-ghost">@location.Name</div>
+												}
+											}
+										</div>
+									</div>
+								}
+								else
+								{
+									<div class="w-full">
+										<h5 class="font-medium text-black mb-1">Location Restrictions</h5>
+										<div class="badge badge-ghost">🌎 Worldwide</div>
+									</div>
+								}
+							</div>
+							@if (Model.Job.ApplyLink.Contains("mailto:"))
+							{
+								<div class="w-full p-6">
+									<p class="text-gray-600 text-base inline-flex items-center">
+										<span>Please send your application and cover letter to <span class="font-bold">@Model.Job.ApplyLink.Replace("mailto:", "")</span></span>
+									</p>
+								</div>
+							}
+							<div class="flex items-center mt-4">
+								@if (Model.Job.ApplyLink.Contains("mailto:"))
+								{
+									<a href="@Model.Job.ApplyLink" class="btn btn-primary w-full">
+										Apply now
+									</a>
+								}
+								else
+								{
+									<a href="/api/jobs/apply/@Model.Job.Id" target="_blank" class="btn btn-primary w-full">
+										Apply now
+									</a>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

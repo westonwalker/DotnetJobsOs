@@ -1,0 +1,33 @@
+﻿@page "/admin/job-uploads/create"
+@using DotnetJobs.Application.Helpers
+@model Create
+@{
+	Layout = "_AuthLayout";
+}
+
+<section class="max-w-5xl mx-auto py-28 min-h-screen px-4 space-y-12">
+	<div>
+		<h1 class="text-2xl font-bold text-gray-800">
+			Job Uploads
+		</h1>
+		<nav class="space-x-4 text-blue-500">
+			<a href="/admin/dashboard">Dashboard</a>
+			<a href="/admin/job-uploads">Job Uploads</a>
+			<a href="/admin/job-uploads/create">Create Job Upload</a>
+		</nav>
+	</div>
+	<article>
+		<form method="post" class="flex flex-col space-y-4 max-w-lg">
+			@if (HttpContext.PageHasKey("success"))
+			{
+				<div class="bg-green-50 mb-4 p-4 border border-green-600 text-green-600">
+					@HttpContext.GetPageFlash("success")
+				</div>
+			}
+			<input type="text" name="CompanyName" placeholder="Company Name" required class="input input-bordered w-full" />
+			<input type="text" name="ApplyLink" placeholder="Apply Link" required class="input input-bordered w-full" />
+			<textarea type="text" name="Description" placeholder="Description" required class="textarea textarea-bordered"></textarea>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</article>
+</section>

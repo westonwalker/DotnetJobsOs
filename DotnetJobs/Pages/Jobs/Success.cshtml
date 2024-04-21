@@ -1,0 +1,31 @@
+﻿@page "/post-job/success/{paymentGuid}"
+@model Success
+@{
+	ViewData["Title"] = "Your job has been posted!";
+}
+
+<section class="max-w-5xl mx-auto px-4">
+	<article>
+		<div class="w-full text-center flex flex-col items-center justify-center mt-16">
+			<div class="w-full max-w-6xl mx-auto px-4">
+				<h1 class="text-2xl font-bold">Your job has been posted!</h1>
+				<p class="mt-1">You will be emailed a receipt shortly.</p>
+				<p class="mt-10 font-semibold">Here is what happens next..</p>
+				<ul class="space-y-2 mt-4">
+					<li>📧 Job posting will be emailed tomorrow to 1159+ developers looking for work.</li>
+					<li>📌 Job is now stickied to the top of our board for 30 days.</li>
+					<li>🟡 Job listing is highlighted in color and has a featured tag to maximize exposure.</li>
+					@if (Model.Job != null)
+					{
+						<li>
+							<a href="/jobs/@Model.Job.Slug" class="text-indigo-600 font-bold">View your listing →</a>
+						</li>
+					}
+					<li>
+						<a href="/post-job" class="text-indigo-600 font-bold">Post another job →</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</article>
+</section>

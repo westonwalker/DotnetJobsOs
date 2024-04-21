@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="hydro-config" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/favicon.png" />
+    <script defer src="~/hydro/hydro.js" asp-append-version="true"></script>
+    <script defer src="~/hydro/alpine.js" asp-append-version="true"></script>
+    <partial name="_Vite" />
+</head>
+
+<body class="">
+    <partial name="_NavBar2" />
+    <main class="">
+        @RenderBody()
+    </main>
+    <partial name="_Footer" />
+</body>
+
+</html>
